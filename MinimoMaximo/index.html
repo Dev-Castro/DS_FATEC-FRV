@@ -18,7 +18,7 @@
             <div class="minimo">
 
                 <label for="minimo">Mínimo</label>
-                <input type="number" placeholder="Digite o valor Mínimo">
+                <input id="ctxMin" type="number" placeholder="Digite o valor Mínimo">
 
 
             </div>
@@ -26,16 +26,22 @@
             <div class="maximo">
 
                 <label for="maximo">Máximo</label>
-                <input type="number" placeholder="Digite o valor Máximo">
+                <input id="ctxMax" type="number" placeholder="Digite o valor Máximo">
         
 
             </div>
         
         </div>
 
+        <div class="btnSubmit">
+
+            <button onclick="go.run()" id="btnSubimit">OK</button>
+
+        </div>
+
         <div class="response">
 
-            
+            <table id="tblResult"></table>
 
         </div>
     
