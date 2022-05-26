@@ -9,8 +9,8 @@ class MinimoMaximo {
 
         this.cabecalho = {
             value: "Valor",
-            div2: "2",
-            div3: "3"
+            div2: "por 2",
+            div3: "por 3"
         };
         
         this.ordem = ["value", "div2", "div3"];
@@ -39,7 +39,7 @@ class MinimoMaximo {
                     let th = document.createElement ("th");
                     th.textContent = Object.values(header)[cont];
                     if(highlight!=""){if(columns[j]==highlight){th.style.backgroundColor = highlightColor}}
-                    if(j!=columns.length-1){th.style.borderRight = "3px solid white";}
+                    if(j!=columns.length-1){th.style.borderRight = "3px solid black";}
                     trh.appendChild(th);
                 }
                 cont++;
@@ -49,6 +49,8 @@ class MinimoMaximo {
         table.appendChild(thead);
     
         let tbody = document.createElement("tbody");
+
+        tbody.innerText="";
     
         if(list==""){
     
@@ -74,9 +76,35 @@ class MinimoMaximo {
                         if(key == columns[j]){
     
                             let td = tr.insertCell(j);
-                            td.innerText = list[i][key];
+
+                            if(typeof(list[i][key])=="boolean"){
+
+                                if(list[i][key]==1){
+
+                                    let img = document.createElement("img");
+                                    img.src = "img/check.png";
+                                    img.setAttribute("class", "tdimg");
+                                    td.appendChild(img);
+
+                                } else{
+
+                                    let img = document.createElement("img");
+                                    img.src = "img/close.png";
+                                    img.setAttribute("class", "tdimg");
+                                    td.appendChild(img);
+                                
+                                }
+                  
+                            }else{
+
+ 
+                                td.innerText=list[i][key];
+                                
+    
+                            }
+
                             if(highlight!=""){if(columns[j]==highlight){td.style.borderBottom = "3px solid "+highlightColor}}
-                            if(j!=columns.length-1){td.style.borderRight = "3px solid white";}
+                            if(j!=columns.length-1){td.style.borderRight = "3px solid black";}
                         }
                     });
                 }
@@ -91,17 +119,50 @@ class MinimoMaximo {
 
     run(){
 
-        var tabela = document.getElementById("tblResult");
+        this.lista=[]
 
         this.min = document.getElementById('ctxMin').value;
         this.max = document.getElementById('ctxMax').value;
 
-        this.validaOrdem();
+        if(this.validaOrdem()){
 
-        console.log(this.min);
-        console.log(this.max);
+            console.log("Validou\n"+this.min, this.max);
+            for(let i = this.min; i<=this.max; i++){
 
-        // preencheTabela(tabela, cabecalho, ordem, lista)
+
+                if(i!=0){
+
+                    let item = {}
+
+                    item.value = i;
+                    item.div2 = false;
+                    item.div3 = false;
+
+                    if(i%2==0){
+                        item.div2 = true;
+                    }
+                    if(i%3==0){
+                        item.div3 = true;
+                    }
+
+                    if(item.div2!=false||item.div3!=false){
+
+                        this.lista.push(item);
+
+                    }
+
+                    this.listarTabela();
+                }
+            }
+        }
+    }
+
+    listarTabela(){
+
+        let tabela = document.getElementById("tblResult");
+
+        this.preencheTabela(tabela, this.cabecalho, this.ordem, this.lista);
+
 
     }
 
@@ -112,22 +173,43 @@ class MinimoMaximo {
 
         let msg="";
 
-        if(min==max){
-            msg+="- Os valores não podem ser iguais."
-        }
-        if(min>max){
+        if(min=="" || max==""){
 
-            this.min = max;
-            this.max = min;
+            msg+="- Preencha as caixas de texto.\n";
+            alert(msg);
+            return false;
 
-            document.getElementById('ctxMin').value = max;
-            document.getElementById('ctxMax').value = min;
+        } else if(min!="" & max!=""){
 
-        }
+            this.min = parseInt(min);
+            this.max = parseInt(max);
 
-    }
+            if(this.min==this.max){
+                msg+="- Os valores não podem ser iguais.\n";
+            }
+            if(this.min>this.max){
     
+                msg+="- O valor mínimo não pode ser maior que o máximo.\n";
 
+                alert(msg);
+
+                document.getElementById('ctxMin').value = this.max;
+                document.getElementById('ctxMax').value = this.min;
+
+                this.max = min;
+                this.min = max;
+            
+                return true;
+            }
+
+            if(msg!=""){
+                alert(msg)
+                return false;
+            }
+
+            return true;
+        }
+    } 
 }
 
 var go = new MinimoMaximo;
