@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;700&display=swap" rel="stylesheet">
+
+    <title>Classificação</title>
+
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js"></script>
+
+</head>
+
+<body>
+    
+    <section>
+
+        <div class="conteiner">
+            
+            
+            <div class="title">
+    
+                <legend>Consulta de aprovados</legend>        
+    
+            </div>
+    
+            <div class="form">
+    
+                <label for="nome">Digite o nome do candidato:</label>
+                <br>
+                <input id="ctxNome" onkeydown="EnterTab('ctxIdade',event)" type="text" placeholder="Rodrigo Silva">
+                <br>
+                <label for="idade">Digite a idade do candidato:</label>
+                <br>
+                <input id="ctxIdade" onkeydown="EnterTab('ctxNota',event)" type="number" placeholder="18">
+                <br>
+                <label for="nota">Digite a nota do candidato:</label>
+                <br>
+                <input id="ctxNota" onkeydown="EnterTab('ctxNome',event)" type="number" placeholder="10.0">
+    
+            </div>
+    
+            <div class="actions">
+
+                <div class="btnSave">
+                    <button onclick="candidato.salvar()">Salvar</button>
+                </div>
+                            
+                <div class="selectors">
+                    <select onchange="(candidato.filtro=this.value, candidato.listarTabela());" name="filtra"  id="filter">
+                        <option selected disabled>Filtrar</option>
+                        <option value="aprovados">Aprovados</option>
+                        <option value="reprovados">Reprovados</option>
+                        <option value="todos">Todos</option>
+                    </select>
+
+                    <select onchange="(candidato.ordem=this.value, candidato.listarTabela());" name="ordena"  id="sort">
+                        <option selected disabled>Ordenar</option>
+                        <option value="maior">Maior nota</option>
+                        <option value="menor">Menor nota</option>
+                        <option value="velho">Mais velho</option>
+                        <option value="novo">Mais novo</option>
+                        <option value="az">A - Z</option>
+                        <option value="za">Z - A</option>
+                    </select>
+
+                </div>
+    
+            </div>
+    
+            <div class="table">
+    
+                <label id="legendaTabela" for="legenda">Ranking de Classificados</label>
+
+                <table class="table" id="tabela"></table>
+    
+            </div>
+            
+        </div>
+
+
+    </section>
+
+
+
+
+
+</body>
+</html>
